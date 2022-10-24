@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const ejs = require('ejs');
 
 const app = express();
 require('./config/db.js')
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', (req, res) => {
   res.render('index.html', {
+    title:"server api",
     text: "{msg: 服务已启动, code:200 }"
   })
 })
