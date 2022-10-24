@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "sequelize": "^6.25.3",
     "vue": "^3.2.37"
   },
   "devDependencies": {
