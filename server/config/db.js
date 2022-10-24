@@ -1,6 +1,4 @@
-let {
-    Sequelize
-} = require('sequelize');
+let { Sequelize } = require('sequelize');
 
 
 async function connSequ() {
