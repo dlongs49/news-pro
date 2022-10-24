@@ -1,7 +1,19 @@
 {
   "name": "sequelize-vue3",
   "private": true,
-  "version": "0.0.0",
+  "author": "dinglong",
+  "license": "MIT",
+  "keywords": [
+    "nodejs",
+    "express",
+    "vue",
+    "vite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AchieveGirl/AAF-NodeJS.git"
+    },
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,8 +21,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "sequelize": "^6.25.3",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.0",
