@@ -4,10 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ejs = require('ejs');
-
 const app = express();
+const cors = require('cors')
 require('./config/db.js')
-require('./routes/index')(app);
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs'); // 使用 ejs 进行渲染 文档：https://ejs.bootcss.com/
@@ -17,8 +17,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); // 开放 public 目录
-
-
+app.use(cors())
+/**
+ * 引入路由 这里应该在 app.use(express.urlencoded({ extended: false })); 的下面，
+ * 否则 拿不到请求参数，由于先要注册中间件，才能处理请求
+ */
+require('./routes/')(app);
 app.use('/', (req, res) => {
   res.render('index.html', {
     title:"server api",

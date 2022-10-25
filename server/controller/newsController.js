@@ -4,6 +4,7 @@ const { v1: uuidv4 } = require('uuid') // 生成惟一 id
 // 添加新闻
 async function setNews(req, res, next) {
     const o = req.body // 前台对象传参
+    console.log(o);
     try {
         await newsModel.create({ // 创建记录 相当于 sql 中 insert  into 表名 (id, title, ...) value ('16546546','xxxx', ...)
             id: uuidv4(),
@@ -58,16 +59,17 @@ async function getNews(req, res, next) {
 async function theNews(req, res, next) {
     const o = req.query
     try {
-        const { rows } = await newsModel.findOne({
+        const data = await newsModel.findOne({
             raw: true,
             where: {
                 id: o.id
             }
         })
+        console.log(data);
         res.send({
             code: 200,
             msg: 'ok',
-            data: rows,
+            data,
             success: true
         })
     } catch (error) {
@@ -80,11 +82,11 @@ async function theNews(req, res, next) {
 }
 // 更新新闻
 async function updateNews(req, res, next) {
-    const o = req.query
+    const o = req.body
     try {
         const result = await newsModel.update({
             title: o.title,
-            desction: o.image,
+            desction: o.desction,
             author: o.author,
             content: o.content,
             sort: o.sort,
@@ -98,7 +100,6 @@ async function updateNews(req, res, next) {
             res.send({
                 code: 200,
                 msg: 'ok',
-                data: rows,
                 success: true
             })
         } else {
@@ -121,7 +122,7 @@ async function updateNews(req, res, next) {
 async function delNews(req, res, next) {
     const o = req.body
     try {
-        await bannerModel.destroy({
+        await newsModel.destroy({
             where: {
                 id: o
             }
