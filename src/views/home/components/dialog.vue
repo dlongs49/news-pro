@@ -69,7 +69,7 @@ function init(id) {
 defineExpose({ init })
 // 获取指定
 function getTheNews(id) {
-    fetch(`/api/v1/news/the?id=${id}`, {
+    fetch(`${base_url}/api/v1/news/the?id=${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ function submitForm() {
 
 // 新建确定
 function handleOk() {
-    fetch(`/api/v1/news/set`, {
+    fetch(`${base_url}/api/v1/news/set`, {
         method: 'POST',
         body: JSON.stringify(form.value),
         headers: {
@@ -124,7 +124,7 @@ function handleOk() {
 
 // 编辑确定
 function handleEdit() {
-    fetch(`/api/v1/news/update`, {
+    fetch(`${base_url}/api/v1/news/update`, {
         method: 'PUT',
         body: JSON.stringify(form.value),
         headers: {

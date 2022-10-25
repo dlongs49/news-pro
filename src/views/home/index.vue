@@ -94,12 +94,12 @@ function clear() {
 // 列表
 function getNews() {
     loading.value = true;
-    // `${base_url}/api/v1/news/get`
-    fetch(`/api/v1/news/get?key=${page.value.key}&offset=${page.value.offset}&limit=${page.value.limit}`, {
+    fetch(`${base_url}/api/v1/news/get?key=${page.value.key}&offset=${page.value.offset}&limit=${page.value.limit}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        mode:'cors', // 解决跨域 ，原因：https://blog.csdn.net/qq_40653782/article/details/104271647
     }).then(response => response.json()).then(res => {
         if (res.code == 200 && res.success) {
             loading.value = false;
