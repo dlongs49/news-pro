@@ -9,6 +9,13 @@
                 <el-button @click="batchhandleDel(idList)" type="danger" icon="Minus">删除
                 </el-button>
             </el-col>
+            <el-col :span="4">
+                <el-input placeholder="请输入标题" v-model="page.key" @clear="clear" clearable>
+                    <template #append>
+                        <el-button @click="getNews" icon="Search" />
+                    </template>
+                </el-input>
+            </el-col>
         </el-row>
         <el-row class="tableRow">
             <el-col :span="24">
@@ -32,6 +39,7 @@
             </el-col>
         </el-row>
     </div>
+    <pagination :page="page" @changeSize="changeSize" />
     <dialog-form ref="formData" :getNews="getNews" />
 </template>
   
@@ -46,6 +54,7 @@ const loading = ref(false)
 const tableData = ref([])
 const idList = ref([])
 const base_url = import.meta.env.VITE_APP_URL
+const page = ref({ key: null, offset: 1, limit: 8, total: null, })
 onMounted(() => {
     getNews()
 })
@@ -73,17 +82,29 @@ function handleNew() {
 function handleEdit(id) {
     formData.value.init(id);
 }
-
+// 分页
+function changeSize(data) {
+    page.value.offset = data;
+    getNews();
+}
+//清除搜索框
+function clear() {
+    getNews();
+}
 // 列表
 function getNews() {
     loading.value = true;
     // `${base_url}/api/v1/news/get`
-    fetch(`/api/v1/news/get`, {
-        method: 'GET'
+    fetch(`/api/v1/news/get?key=${page.value.key}&offset=${page.value.offset}&limit=${page.value.limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     }).then(response => response.json()).then(res => {
         if (res.code == 200 && res.success) {
             loading.value = false;
             tableData.value = res.data.rows
+            page.value.total = res.data.count
         } else {
             loading.value = false;
             ElMessage.warning("获取失败");
@@ -103,7 +124,7 @@ function handleDel(data) {
         .then(() => {
             fetch(`/api/v1/news/del`, {
                 method: 'DELETE',
-                body:JSON.stringify(data),
+                body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
                 }

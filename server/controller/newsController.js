@@ -1,6 +1,6 @@
 const { newsModel } = require('../model/newsModel')
 const { v1: uuidv4 } = require('uuid') // 生成惟一 id
-
+const { Op } = require('sequelize')
 // 添加新闻
 async function setNews(req, res) {
     const o = req.body // 前台对象传参
@@ -30,13 +30,22 @@ async function setNews(req, res) {
 }
 // 获取新闻
 async function getNews(req, res) {
-    const o = req.query // 字符串传参 [get]
+    const offset = Number(req.query.offset)
+    const limit = Number(req.query.limit)
+    const key = req.query.key != 'null' && req.query.key != '' ? req.query.key : ''
     try {
         const { rows, count } = await newsModel.findAndCountAll({
-            raw: true, // 原始返回
+            raw: true, // 原始返回  
+            offset: (offset - 1) * limit, // 分页索引
+            limit, // 个数
             order: [
                 ['sort', 'DESC'] // 排序 DESC 升序 ASC 降序 通过传入的 sort
-            ]
+            ],
+            where: {
+                title: {
+                    [Op.like]: `%${key}%`
+                }
+            }
         })
         res.send({
             code: 200,
