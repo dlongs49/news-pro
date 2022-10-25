@@ -1,5 +1,6 @@
 {
   "name": "sequelize-vue3",
+  "version": "1.0.1",
   "private": true,
   "author": "dinglong",
   "license": "MIT",
@@ -13,7 +14,6 @@
     "type": "git",
     "url": "https://github.com/dlongs49/news-pro.git"
   },
-  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",

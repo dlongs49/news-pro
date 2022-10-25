@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const { setNews, getNews, theNews, updateNews, delNews } = require('../../controller/newsController')
 // 添加新闻
 router.post('/set', setNews);

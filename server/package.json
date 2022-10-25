@@ -2,6 +2,18 @@
   "name": "sequelize-vue3",
   "version": "1.0.1",
   "private": true,
+  "author": "dinglong",
+  "license": "MIT",
+  "keywords": [
+    "nodejs",
+    "express",
+    "vue",
+    "vite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlongs49/news-pro.git"
+  },
   "scripts": {
     "dev": "nodemon ./bin/www"
   },

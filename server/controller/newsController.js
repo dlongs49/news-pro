@@ -2,7 +2,7 @@ const { newsModel } = require('../model/newsModel')
 const { v1: uuidv4 } = require('uuid') // 生成惟一 id
 
 // 添加新闻
-async function setNews(req, res, next) {
+async function setNews(req, res) {
     const o = req.body // 前台对象传参
     console.log(o);
     try {
@@ -29,7 +29,7 @@ async function setNews(req, res, next) {
     }
 }
 // 获取新闻
-async function getNews(req, res, next) {
+async function getNews(req, res) {
     const o = req.query // 字符串传参 [get]
     try {
         const { rows, count } = await newsModel.findAndCountAll({
@@ -56,7 +56,7 @@ async function getNews(req, res, next) {
     }
 }
 // 获取新闻
-async function theNews(req, res, next) {
+async function theNews(req, res) {
     const o = req.query
     try {
         const data = await newsModel.findOne({
@@ -81,7 +81,7 @@ async function theNews(req, res, next) {
     }
 }
 // 更新新闻
-async function updateNews(req, res, next) {
+async function updateNews(req, res) {
     const o = req.body
     try {
         const result = await newsModel.update({
@@ -119,7 +119,7 @@ async function updateNews(req, res, next) {
     }
 }
 // 删除新闻
-async function delNews(req, res, next) {
+async function delNews(req, res) {
     const o = req.body
     try {
         await newsModel.destroy({
