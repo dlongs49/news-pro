@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ejs = require('ejs');
 const app = express();
-const cors = require('cors')
+const cors = require('cors') // 解决跨域，一行代码解决，nice~~
 require('./config/db.js')
 
 
@@ -16,7 +16,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'))); // 开放 public 目录
+app.use(express.static(path.join(__dirname, 'public'))); // 静态资源目录
 app.use(cors())
 /**
  * 引入路由 这里应该在 app.use(express.urlencoded({ extended: false })); 的下面，

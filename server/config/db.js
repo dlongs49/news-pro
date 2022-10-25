@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
 
 
-// async function connSequ() {
 const sequelize = new Sequelize('server', 'server', '123456', { // 数据库名 用户名 密码
     host: 'localhost',
     dialect: 'mysql',

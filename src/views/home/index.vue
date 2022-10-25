@@ -24,9 +24,13 @@
                     <el-table-column type="selection" width="55" align="center"></el-table-column>
                     <el-table-column prop="title" label="标题名称" width="300" align="center"></el-table-column>
                     <el-table-column prop="desction" label="摘要" width="450" align="center"></el-table-column>
-                    <el-table-column prop="author" label="作者" width="80" align="center"></el-table-column>
+                    <el-table-column prop="author" label="作者" width="100" align="center"></el-table-column>
                     <el-table-column prop="sort" label="排序" width="80" align="center"></el-table-column>
-                    <el-table-column prop="time" label="操作时间" width="250" align="center"></el-table-column>
+                    <el-table-column prop="time" label="操作时间" width="200" align="center">
+                        <template #default="scope">
+                            {{moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}
+                        </template>
+                    </el-table-column>
                     <el-table-column label="操作" align="center">
                         <template #default="scope">
                             <el-button @click="handleEdit(scope.row.id)" type="primary" size="small">编辑
@@ -39,8 +43,10 @@
             </el-col>
         </el-row>
     </div>
+    <!-- 分页抽离 -->
     <pagination :page="page" @changeSize="changeSize" />
-    <dialog-form ref="formData" :getNews="getNews" />
+    <!-- 弹框表单抽离 -->
+    <dialog-form ref="formData" :getNews="getNews" />  
 </template>
   
 <script setup>
@@ -48,13 +54,15 @@ import { onMounted, ref, getCurrentInstance } from 'vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import pagination from '@/components/Pagination/index.vue'
 import dialogForm from "./components/dialog.vue";
-const { proxy } = getCurrentInstance()
-const formData = ref()
-const loading = ref(false)
-const tableData = ref([])
-const idList = ref([])
-const base_url = import.meta.env.VITE_APP_URL
-const page = ref({ key: null, offset: 1, limit: 8, total: null, })
+import moment from 'moment'
+const { proxy } = getCurrentInstance() // 类似与vue2.x中 Vue.prototype.xxx = xxx 全局挂载自定一数据
+const formData = ref() // 操作子组件的方法
+const loading = ref(false) // 加载状态
+const tableData = ref([]) // 表格数据
+const idList = ref([]) // 选中 删除 id 集合
+const base_url = import.meta.env.VITE_APP_URL // 获取 .env 配置参数
+console.log(import.meta.env);
+const page = ref({ key: null, offset: 1, limit: 8, total: null, }) // 分页参数
 onMounted(() => {
     getNews()
 })
@@ -122,7 +130,7 @@ function handleDel(data) {
         type: "warning",
     })
         .then(() => {
-            fetch(`/api/v1/news/del`, {
+            fetch(`${base_url}/api/v1/news/del`, {
                 method: 'DELETE',
                 body: JSON.stringify(data),
                 headers: {
@@ -152,13 +160,5 @@ function handleDel(data) {
     .tableRow {
         margin-top: 10px;
     }
-}
-
-.coverimg {
-    max-width: 150px;
-    max-height: 60px;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
 }
 </style>

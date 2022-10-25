@@ -18,11 +18,18 @@ export default defineConfig({
     //   }
     // }
   },
+  css: {
+    preprocessorOptions: {
+        less: {
+            additionalData: `@import '@/style/global.less';` // 配置全局样式 
+        }
+    }
+},
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("node_modules")) {
+          if (id.includes("node_modules")) { // 切割打包，减少打包体积
             return id
               .toString()
               .split("node_modules/")[1]

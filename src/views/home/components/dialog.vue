@@ -32,7 +32,7 @@ const ruleFormRef = ref()
 const visible = ref(false)
 const loading = ref(false)
 const title = ref("查看")
-const form = ref({ image: '' })
+const form = ref({ })
 const rules = ref({
     title: [{ required: true, message: "必填", trigger: "blur" }],
     content: [{ required: true, message: "必填", trigger: "blur" }],
@@ -54,8 +54,8 @@ function handleClose() {
 // 父调子
 function init(id) {
     visible.value = true;
-    nextTick(() => {
-        ruleFormRef.value.resetFields();
+    nextTick(() => { // 等该 dom 渲染完毕操作
+        ruleFormRef.value.resetFields(); // 请求校验
         form.value = { sort: 0 };
     });
     if (id != null) {
@@ -66,7 +66,7 @@ function init(id) {
         title.value = "新建";
     }
 }
-defineExpose({ init })
+defineExpose({ init }) // 为了子组件调用父组件的方法刷新列表
 // 获取指定
 function getTheNews(id) {
     fetch(`${base_url}/api/v1/news/the?id=${id}`, {
@@ -150,18 +150,7 @@ function cancelForm() {
 </script>
   
 <style lang="less" scoped>
-.selecs {
-    width: 100%;
-}
 
-.btncen {
-    text-align: center;
-}
 
-.elcon {
-    /deep/ .el-form-item__content {
-        line-height: 0;
-    }
-}
 </style>
   
