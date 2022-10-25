@@ -1,7 +1,19 @@
-# Vue 3 + Vite
+## 说明
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+该项目为简单的前后台增删改查
 
-## Recommended IDE Setup
+## 技术栈
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+> 前端
+- vue3.x
+- vue-router4.x
+- element-plus
+- less
+- moment
+- wangeditor 
+- vite
+> 后端
+- express
+- sequelize
+- uuid
+- ejs
